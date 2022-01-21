@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -35,7 +36,7 @@ func getCommits(username string) User {
 	body, _ := ioutil.ReadAll(resp.Body)
 
 	// Получение сегодняшней даты
-	currentDate := string(time.Now().Format("2006-01-02"))
+	currentDate := string(time.Now().Add(time.Hour * 3).Format("2006-01-02"))
 
 	// Вот так выглядит html одной ячейки:
 	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1"></rect>
