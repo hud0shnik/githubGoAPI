@@ -93,12 +93,13 @@ func getUser(writer http.ResponseWriter, request *http.Request) {
 
 func main() {
 	// Вывод даты начала работы
-	fmt.Println("API Start:" + string(time.Now().Format("2006-01-02 15:04:05")))
+	port := os.Getenv("PORT")
+	fmt.Println("API Start:" + string(time.Now().Add(time.Hour*3).Format("2006-01-02 15:04:05")))
 
 	// Роутер
 	router := mux.NewRouter()
 
 	// Маршрут user
 	router.HandleFunc("/user/{id}", getUser).Methods("GET")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
