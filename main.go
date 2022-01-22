@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -48,7 +47,7 @@ func getCommits(username string, date string) User {
 
 		// Проход по всему html файлу в поисках нужной клетки
 		for ; i < len(pageStr)-40; i++ {
-			if pageStr[i:i+35] == "data-date=\""+date {
+			if pageStr[i:i+21] == "data-date=\""+date {
 				// Так как количество коммитов стоит перед датой, переставляем i
 				i -= 7
 				break
@@ -84,14 +83,14 @@ func getCommits(username string, date string) User {
 	}
 }
 
-func getUser(writer http.ResponseWriter, request *http.Request) {
+func getInfo(writer http.ResponseWriter, request *http.Request) {
 	// Заголовок, определяющий тип данных для работы
 	writer.Header().Set("Content-Type", "application/json")
 
 	// Запись параметров из реквеста
 	params := mux.Vars(request)
-
 	// Обработка данных и вывод результата
+
 	result := getCommits(params["id"], params["date"])
 	json.NewEncoder(writer).Encode(result)
 }
@@ -105,8 +104,8 @@ func main() {
 	router := mux.NewRouter()
 
 	// Маршруты
-	router.HandleFunc("/user/{id}", getUser).Methods("GET")
-	router.HandleFunc("/user/{id}/{date}", getUser).Methods("GET")
+	router.HandleFunc("/user/{id}", getInfo).Methods("GET")
+	router.HandleFunc("/user/{id}/{date}", getInfo).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
