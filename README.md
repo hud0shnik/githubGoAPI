@@ -8,8 +8,9 @@ GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik
 Семпл респонса:
 ``` Json
 {
-"user":"hud0shnik",
-"commits":9,
-"color":4
+"date":     "2022-01-21",
+"username": "hud0shnik",
+"commits":   9,
+"color":     4
 }
 ```
