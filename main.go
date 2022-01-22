@@ -97,7 +97,7 @@ func getInfo(writer http.ResponseWriter, request *http.Request) {
 
 func main() {
 	// Вывод даты начала работы
-	port := os.Getenv("PORT")
+	port := "8080" //os.Getenv("PORT")
 	fmt.Println("API Start:" + string(time.Now().Add(time.Hour*3).Format("2006-01-02 15:04:05")))
 
 	// Роутер
