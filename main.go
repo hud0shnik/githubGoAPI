@@ -15,15 +15,13 @@ import (
 )
 
 type User struct {
-	Username string `json:"user"`
+	Date     string `json:"date"`
+	Username string `json:"username"`
 	Commits  int    `json:"commits"`
 	Color    int    `json:"color"`
 }
 
-func getCommits(username string) User {
-	// Вывод в терминал для тестов
-	fmt.Println("Checking user: " + username)
-
+func getCommits(username string, date string) User {
 	// Формирование и исполнение запроса
 	resp, err := http.Get("https://github.com/" + username)
 	if err != nil {
@@ -35,20 +33,22 @@ func getCommits(username string) User {
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 
-	// Получение сегодняшней даты
-	currentDate := string(time.Now().Add(time.Hour * 3).Format("2006-01-02"))
+	// Если поле даты пустое, функция поставит сегодняшнее число
+	if date == "" {
+		// Получение сегодняшней даты
+		date = string(time.Now().Add(time.Hour * 3).Format("2006-01-02"))
+	}
 
 	// Вот так выглядит html одной ячейки:
 	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1"></rect>
 
 	// Поиск сегодняшней ячейеки
-	if strings.Contains(string(body), "data-date=\""+currentDate+"\" data-level=\"") {
-		pageStr, commitsString := string(body), ""
-		i := 0
+	if strings.Contains(string(body), "data-date=\""+date) {
+		pageStr, commitsString, i := string(body), "", 0
 
 		// Проход по всему html файлу в поисках нужной клетки
 		for ; i < len(pageStr)-40; i++ {
-			if pageStr[i:i+35] == "data-date=\""+currentDate+"\" data-level=\"" {
+			if pageStr[i:i+35] == "data-date=\""+date {
 				// Так как количество коммитов стоит перед датой, переставляем i
 				i -= 7
 				break
@@ -63,16 +63,21 @@ func getCommits(username string) User {
 		}
 		for i += 35; pageStr[i] != '"'; i++ {
 		}
+
 		// Запись и обработка полученной информации
 		dataLevel, _ := strconv.Atoi(pageStr[i+1 : i+2])
 		commits, _ := strconv.Atoi(commitsString)
+
 		return User{
+			Date:     date,
 			Username: username,
 			Commits:  commits,
 			Color:    dataLevel,
 		}
 	}
+
 	return User{
+		Date:     date,
 		Username: username,
 		Commits:  0,
 		Color:    0,
@@ -87,7 +92,7 @@ func getUser(writer http.ResponseWriter, request *http.Request) {
 	params := mux.Vars(request)
 
 	// Обработка данных и вывод результата
-	result := getCommits(params["id"])
+	result := getCommits(params["id"], params["date"])
 	json.NewEncoder(writer).Encode(result)
 }
 
@@ -99,7 +104,9 @@ func main() {
 	// Роутер
 	router := mux.NewRouter()
 
-	// Маршрут user
+	// Маршруты
 	router.HandleFunc("/user/{id}", getUser).Methods("GET")
+	router.HandleFunc("/user/{id}/{date}", getUser).Methods("GET")
+
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
