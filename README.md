@@ -1,7 +1,15 @@
-# githubGoAPI
-API Для получения информации о количестве коммитов пользователя
+# GithubGoAPI - API статистики пользователей GitHub
 
-Семпл запроса:
+Семпл реквеста:
+``` Elixir
+GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik
 ```
-https://hud0shnikgitapi.herokuapp.com/user/hud0shnik
+
+Семпл респонса:
+``` Json
+{
+"user":"hud0shnik",
+"commits":9,
+"color":4
+}
 ```
