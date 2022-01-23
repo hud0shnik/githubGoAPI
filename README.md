@@ -4,6 +4,9 @@
 ``` Elixir
 GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik
 ```
+``` Elixir
+GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik/2022-01-20
+```
 
 Семпл респонса:
 ``` Json
@@ -14,3 +17,4 @@ GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik
 "color":     4
 }
 ```
+Параметр color - цвет ячейки. Всего есть 5 цветов: от серого (0) до ярко-зеленого(4)
