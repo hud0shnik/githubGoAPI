@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -40,33 +39,28 @@ func getCommits(username string, date string) User {
 	}
 
 	// Вот так выглядит html одной ячейки:
-	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1"></rect>
+	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1">
 
 	// Поиск сегодняшней ячейеки
 	if strings.Contains(string(body), "data-date=\""+date) {
-		pageStr, commitsString, i := string(body), "", 0
+		pageStr, i := string(body), 0
 
-		// Проход по всему html файлу в поисках нужной клетки
 		for ; i < len(pageStr)-40; i++ {
 			if pageStr[i:i+21] == "data-date=\""+date {
-				// Так как количество коммитов стоит перед датой, переставляем i
-				i -= 7
+				for ; pageStr[i] != '<'; i-- {
+					// Доводит i до начала кода ячейки
+				}
 				break
 			}
 		}
-		for ; pageStr[i] != '"'; i++ {
-			// Доводит i до символа "
-		}
-		for i++; pageStr[i] != '"'; i++ {
-			// Считывание и запись значения в скобках
-			commitsString += string(pageStr[i])
-		}
-		for i += 35; pageStr[i] != '"'; i++ {
-		}
+		// Запись значений в скобках в слайс стрингов
+		values := strings.FieldsFunc(pageStr[i:i+155], func(r rune) bool {
+			return r == '"'
+		})
 
-		// Запись и обработка полученной информации
-		dataLevel, _ := strconv.Atoi(pageStr[i+1 : i+2])
-		commits, _ := strconv.Atoi(commitsString)
+		// Запись и обработка нужной информации
+		dataLevel, _ := strconv.Atoi(values[15])
+		commits, _ := strconv.Atoi(values[19])
 
 		return User{
 			Date:     date,
