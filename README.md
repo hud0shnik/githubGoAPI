@@ -1,4 +1,4 @@
-# GithubGoAPI - API статистики пользователей GitHub
+# 🐙 GithubGoAPI - API статистики пользоватя GitHub 📈
 
 Семпл реквеста:
 ``` Elixir
@@ -7,7 +7,6 @@ GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik
 ``` Elixir
 GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik/2022-01-20
 ```
-
 Семпл респонса:
 ``` Json
 {
