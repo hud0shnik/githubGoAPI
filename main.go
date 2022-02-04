@@ -25,7 +25,6 @@ func getCommits(username string, date string) User {
 	// Формирование и исполнение запроса
 	resp, err := http.Get("https://github.com/" + username)
 	if err != nil {
-		fmt.Println("Github error: ", err)
 		return User{}
 	}
 
@@ -36,6 +35,7 @@ func getCommits(username string, date string) User {
 	// Если поле даты пустое, функция поставит сегодняшнее число
 	if date == "" {
 		// Получение сегодняшней даты
+		// Добавляет 3 часа т.к сервер находится в другом часовом поясе
 		date = string(time.Now().Add(time.Hour * 3).Format("2006-01-02"))
 	}
 
