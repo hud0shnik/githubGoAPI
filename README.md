@@ -1,4 +1,4 @@
-# 🐙 GithubGoAPI - API статистики пользоватя GitHub 📈
+# 🐙 API статистики пользоватя GitHub 📈
 
 Семпл реквеста:
 ``` Elixir
