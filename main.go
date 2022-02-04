@@ -44,9 +44,9 @@ func getCommits(username string, date string) User {
 
 	// Поиск сегодняшней ячейеки
 	if strings.Contains(string(body), "data-date=\""+date) {
-		pageStr, i := string(body), 0
+		pageStr, i := string(body), 14000
 
-		for ; i < len(pageStr)-40; i++ {
+		for ; i < len(pageStr)-24000; i++ {
 			if pageStr[i:i+21] == "data-date=\""+date {
 				for ; pageStr[i] != '<'; i-- {
 					// Доводит i до начала кода ячейки
