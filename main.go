@@ -14,6 +14,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// Структура для храния информации о пользователе
 type User struct {
 	Date     string `json:"date"`
 	Username string `json:"username"`
@@ -21,6 +22,7 @@ type User struct {
 	Color    int    `json:"color"`
 }
 
+// Функция получения информации с сайта
 func getInfo(username string, date string) User {
 	// Формирование и исполнение запроса
 	resp, err := http.Get("https://github.com/" + username)
@@ -54,6 +56,7 @@ func getInfo(username string, date string) User {
 				break
 			}
 		}
+
 		// Получение параметров ячейки
 		values := strings.FieldsFunc(pageStr[i:i+155], func(r rune) bool {
 			return r == '"'
@@ -63,6 +66,7 @@ func getInfo(username string, date string) User {
 		dataLevel, _ := strconv.Atoi(values[15])
 		commits, _ := strconv.Atoi(values[19])
 
+		// Возвращение обработанной информации
 		return User{
 			Date:     date,
 			Username: username,
@@ -71,6 +75,7 @@ func getInfo(username string, date string) User {
 		}
 	}
 
+	// Если пользователь не найден, API вернёт пустую структуру
 	return User{
 		Date:     date,
 		Username: username,
@@ -79,8 +84,9 @@ func getInfo(username string, date string) User {
 	}
 }
 
-	// Заголовок, определяющий тип данных для работы
+// Функция отправки респонса
 func sendInfo(writer http.ResponseWriter, request *http.Request) {
+	// Заголовок, определяющий тип данных респонса
 	writer.Header().Set("Content-Type", "application/json")
 
 	// Обработка данных и вывод результата
