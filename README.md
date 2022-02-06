@@ -3,10 +3,10 @@
 <h3>Семпл реквеста </h3>
 
 ``` Elixir
-GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik
+GET https://hud0shnikgitapi.herokuapp.com/hud0shnik
 ```
 ``` Elixir
-GET https://hud0shnikgitapi.herokuapp.com/user/hud0shnik/2022-01-20
+GET https://hud0shnikgitapi.herokuapp.com/hud0shnik/2022-01-20
 ```
 <h3>Семпл респонса </h3>
 
