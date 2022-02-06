@@ -21,7 +21,7 @@ type User struct {
 	Color    int    `json:"color"`
 }
 
-func getCommits(username string, date string) User {
+func getInfo(username string, date string) User {
 	// Формирование и исполнение запроса
 	resp, err := http.Get("https://github.com/" + username)
 	if err != nil {
@@ -79,24 +79,24 @@ func getCommits(username string, date string) User {
 	}
 }
 
-func getInfo(writer http.ResponseWriter, request *http.Request) {
 	// Заголовок, определяющий тип данных для работы
+func sendInfo(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 
 	// Обработка данных и вывод результата
-	json.NewEncoder(writer).Encode(getCommits(mux.Vars(request)["id"], mux.Vars(request)["date"]))
+	json.NewEncoder(writer).Encode(getInfo(mux.Vars(request)["id"], mux.Vars(request)["date"]))
 }
 
 func main() {
 	// Вывод времени начала работы
-	fmt.Println("API Start:" + string(time.Now().Add(time.Hour*3).Format("2006-01-02 15:04:05")))
+	fmt.Println("API Start: " + string(time.Now().Add(time.Hour*3).Format("2006-01-02 15:04:05")))
 
 	// Роутер
 	router := mux.NewRouter()
 
 	// Маршруты
-	router.HandleFunc("/{id}", getInfo).Methods("GET")
-	router.HandleFunc("/{id}/{date}", getInfo).Methods("GET")
+	router.HandleFunc("/{id}", sendInfo).Methods("GET")
+	router.HandleFunc("/{id}/{date}", sendInfo).Methods("GET")
 
 	// Запуск API
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
