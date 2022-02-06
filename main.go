@@ -95,8 +95,8 @@ func main() {
 	router := mux.NewRouter()
 
 	// Маршруты
-	router.HandleFunc("/user/{id}", getInfo).Methods("GET")
-	router.HandleFunc("/user/{id}/{date}", getInfo).Methods("GET")
+	router.HandleFunc("/{id}", getInfo).Methods("GET")
+	router.HandleFunc("/{id}/{date}", getInfo).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
 }
