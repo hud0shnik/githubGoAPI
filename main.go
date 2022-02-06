@@ -54,7 +54,7 @@ func getCommits(username string, date string) User {
 				break
 			}
 		}
-		// Запись значений в скобках в слайс стрингов
+		// Получение параметров ячейки
 		values := strings.FieldsFunc(pageStr[i:i+155], func(r rune) bool {
 			return r == '"'
 		})
@@ -88,7 +88,7 @@ func getInfo(writer http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
-	// Вывод даты начала работы
+	// Вывод времени начала работы
 	fmt.Println("API Start:" + string(time.Now().Add(time.Hour*3).Format("2006-01-02 15:04:05")))
 
 	// Роутер
@@ -98,5 +98,6 @@ func main() {
 	router.HandleFunc("/{id}", getInfo).Methods("GET")
 	router.HandleFunc("/{id}/{date}", getInfo).Methods("GET")
 
+	// Запуск API
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
 }
