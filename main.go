@@ -63,8 +63,8 @@ func getInfo(username string, date string) User {
 		})
 
 		// Запись и обработка нужной информации
-		dataLevel, _ := strconv.Atoi(values[15])
-		commits, _ := strconv.Atoi(values[19])
+		dataLevel, _ := strconv.Atoi(values[19])
+		commits, _ := strconv.Atoi(values[15])
 
 		// Возвращение обработанной информации
 		return User{
