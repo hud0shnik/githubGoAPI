@@ -102,7 +102,9 @@ func main() {
 
 	// Маршруты
 	router.HandleFunc("/{id}", sendInfo).Methods("GET")
+	router.HandleFunc("/{id}/", sendInfo).Methods("GET")
 	router.HandleFunc("/{id}/{date}", sendInfo).Methods("GET")
+	router.HandleFunc("/{id}/{date}/", sendInfo).Methods("GET")
 
 	// Запуск API
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
