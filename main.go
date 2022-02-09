@@ -30,18 +30,17 @@ func getInfo(username string, date string) User {
 		return User{}
 	}
 
-	// Запись информации из респонса
+	// Запись респонса
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 
 	// Если поле даты пустое, функция поставит сегодняшнее число
 	if date == "" {
 		// Получение сегодняшней даты
-		// Добавляет 3 часа т.к сервер находится в другом часовом поясе
-		date = string(time.Now().Add(time.Hour * 3).Format("2006-01-02"))
+		date = string(time.Now().Format("2006-01-02"))
 	}
 
-	// Вот так выглядит html одной ячейки:
+	// Так выглядит html одной ячейки:
 	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1">
 
 	// Поиск сегодняшней ячейеки
@@ -95,7 +94,7 @@ func sendInfo(writer http.ResponseWriter, request *http.Request) {
 
 func main() {
 	// Вывод времени начала работы
-	fmt.Println("API Start: " + string(time.Now().Add(time.Hour*3).Format("2006-01-02 15:04:05")))
+	fmt.Println("API Start: " + string(time.Now().Format("2006-01-02 15:04:05")))
 
 	// Роутер
 	router := mux.NewRouter()
