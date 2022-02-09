@@ -6,7 +6,7 @@
 GET https://hud0shnikgitapi.herokuapp.com/hud0shnik
 ```
 ``` Elixir
-GET https://hud0shnikgitapi.herokuapp.com/hud0shnik/2022-01-20
+GET https://hud0shnikgitapi.herokuapp.com/hud0shnik/2022-01-21
 ```
 <h3>Семпл респонса </h3>
 
