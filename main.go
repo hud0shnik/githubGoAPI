@@ -107,4 +107,5 @@ func main() {
 
 	// Запуск API
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
+	// log.Fatal(http.ListenAndServe(":8080", router))
 }
