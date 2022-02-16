@@ -36,7 +36,6 @@ func getInfo(username string, date string) User {
 
 	// Если поле даты пустое, функция поставит сегодняшнее число
 	if date == "" {
-		// Получение сегодняшней даты
 		date = string(time.Now().Format("2006-01-02"))
 	}
 
@@ -44,7 +43,7 @@ func getInfo(username string, date string) User {
 	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1">
 
 	// Весь html страницы в формате string
-	pageStr := string(body)
+	pageStr := string(body[140000:225000])
 
 	// Указатель на ячейку нужной даты
 	i := strings.Index(pageStr, "data-date=\""+date)
