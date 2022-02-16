@@ -23,7 +23,7 @@ type User struct {
 }
 
 // Функция получения информации с сайта
-func getInfo(username string, date string) User {
+func getCommits(username string, date string) User {
 	// Формирование и исполнение запроса
 	resp, err := http.Get("https://github.com/" + username)
 	if err != nil {
@@ -82,12 +82,12 @@ func getInfo(username string, date string) User {
 }
 
 // Функция отправки респонса
-func sendInfo(writer http.ResponseWriter, request *http.Request) {
+func sendCommits(writer http.ResponseWriter, request *http.Request) {
 	// Заголовок, определяющий тип данных респонса
 	writer.Header().Set("Content-Type", "application/json")
 
 	// Обработка данных и вывод результата
-	json.NewEncoder(writer).Encode(getInfo(mux.Vars(request)["id"], mux.Vars(request)["date"]))
+	json.NewEncoder(writer).Encode(getCommits(mux.Vars(request)["id"], mux.Vars(request)["date"]))
 }
 
 func main() {
@@ -98,10 +98,10 @@ func main() {
 	router := mux.NewRouter()
 
 	// Маршруты
-	router.HandleFunc("/{id}", sendInfo).Methods("GET")
-	router.HandleFunc("/{id}/", sendInfo).Methods("GET")
-	router.HandleFunc("/{id}/{date}", sendInfo).Methods("GET")
-	router.HandleFunc("/{id}/{date}/", sendInfo).Methods("GET")
+	router.HandleFunc("/{id}", sendCommits).Methods("GET")
+	router.HandleFunc("/{id}/", sendCommits).Methods("GET")
+	router.HandleFunc("/{id}/{date}", sendCommits).Methods("GET")
+	router.HandleFunc("/{id}/{date}/", sendCommits).Methods("GET")
 
 	// Запуск API
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
