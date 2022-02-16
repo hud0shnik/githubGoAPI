@@ -1,36 +1,36 @@
 # 🐙 API статистики пользоватя GitHub 📈
-
 <details>
-  <summary> 🇬🇧 <b>English Version</b> 🇬🇧 </summary>
-  <h3>Request sample </h3>
-
-``` Elixir
-GET https://hud0shnikgitapi.herokuapp.com/hud0shnik
-```
-``` Elixir
-GET https://hud0shnikgitapi.herokuapp.com/hud0shnik/2022-01-21
-```
-<h3>Response sample </h3>
-
-``` Json
-{
-"date":     "2022-01-21",
-"username": "hud0shnik",
-"commits":   9,
-"color":     4
-}
-```
-> color is color of the cell. There are 5 colors in total: from ***gray (0)*** to ***bright green (4)***
-
+   <summary> 🇬🇧 <b>English Version</b> 🇬🇧 </summary>
+   <h3>Request sample </h3>
+  
+   ``` Elixir
+   GET https://hud0shnikgitapi.herokuapp.com/hud0shnik
+   ```
+  
+   ``` Elixir
+   GET https://hud0shnikgitapi.herokuapp.com/hud0shnik/2022-01-21
+   ```
+   <h3>Response sample </h3>
+  
+   ``` Json
+   {
+   "date":     "2022-01-21",
+   "username": "hud0shnik",
+   "commits":   9,
+   "color":     4
+   }
+   ```
+   > color is color of the cell. There are 5 colors in total: from ***gray (0)*** to ***bright green (4)***
 </details>
 
-
+<!---------------------------------------------- Russian Version ----------------------------------------->
 
 <h3>Семпл реквеста </h3>
 
 ``` Elixir
 GET https://hud0shnikgitapi.herokuapp.com/hud0shnik
 ```
+
 ``` Elixir
 GET https://hud0shnikgitapi.herokuapp.com/hud0shnik/2022-01-21
 ```
