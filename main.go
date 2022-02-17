@@ -39,11 +39,17 @@ func getCommits(username string, date string) User {
 		date = string(time.Now().Format("2006-01-02"))
 	}
 
+	result := User{
+		Date:     date,
+		Username: username,
+	}
+
 	// Так выглядит html одной ячейки:
 	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1">
 
 	// Весь html страницы в формате string
-	pageStr := string(body[140000:225000])
+	pageStr := string(body)
+	//pageStr := string(body[140000:225000])
 
 	// Указатель на ячейку нужной даты
 	i := strings.Index(pageStr, "data-date=\""+date)
@@ -63,22 +69,12 @@ func getCommits(username string, date string) User {
 		dataLevel, _ := strconv.Atoi(values[19])
 		commits, _ := strconv.Atoi(values[15])
 
-		// Возвращение обработанной информации
-		return User{
-			Date:     date,
-			Username: username,
-			Commits:  commits,
-			Color:    dataLevel,
-		}
+		// Запись обработанной информации
+		result.Commits, result.Color = commits, dataLevel
+
 	}
 
-	// Если пользователь не найден, API вернёт пустую структуру
-	return User{
-		Date:     date,
-		Username: username,
-		Commits:  0,
-		Color:    0,
-	}
+	return result
 }
 
 // Функция отправки респонса
