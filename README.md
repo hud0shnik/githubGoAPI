@@ -1,5 +1,5 @@
 # 🐙 API статистики пользоватя GitHub 📈
-<details>
+<details open="true">
    <summary> 🇬🇧 <b>English Version</b> 🇬🇧 </summary>
    <h3>Request sample </h3>
   
