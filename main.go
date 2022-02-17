@@ -20,6 +20,7 @@ type User struct {
 	Username string `json:"username"`
 	Commits  int    `json:"commits"`
 	Color    int    `json:"color"`
+	Avatar   string `json:"avatar"`
 }
 
 // Функция получения информации с сайта
@@ -72,6 +73,16 @@ func getCommits(username string, date string) User {
 		// Запись обработанной информации
 		result.Commits, result.Color = commits, dataLevel
 
+	}
+
+	left := strings.Index(pageStr, "https://avatars.githubusercontent.com/u")
+
+	if left != -1 {
+		right := left
+		for ; pageStr[right] != '"'; right++ {
+
+		}
+		result.Avatar = pageStr[left:right]
 	}
 
 	return result
