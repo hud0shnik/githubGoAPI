@@ -45,12 +45,22 @@ func getCommits(username string, date string) User {
 		Username: username,
 	}
 
+	pageStr := string(body[:225000])
+	left := strings.Index(pageStr, "https://avatars.githubusercontent.com/u")
+
+	if left != -1 {
+		right := left
+		for ; pageStr[right] != '"'; right++ {
+
+		}
+		result.Avatar = pageStr[left:right]
+	}
+
 	// Так выглядит html одной ячейки:
 	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1">
 
 	// Весь html страницы в формате string
-	pageStr := string(body)
-	//pageStr := string(body[140000:225000])
+	pageStr = pageStr[140000:]
 
 	// Указатель на ячейку нужной даты
 	i := strings.Index(pageStr, "data-date=\""+date)
@@ -73,16 +83,6 @@ func getCommits(username string, date string) User {
 		// Запись обработанной информации
 		result.Commits, result.Color = commits, dataLevel
 
-	}
-
-	left := strings.Index(pageStr, "https://avatars.githubusercontent.com/u")
-
-	if left != -1 {
-		right := left
-		for ; pageStr[right] != '"'; right++ {
-
-		}
-		result.Avatar = pageStr[left:right]
 	}
 
 	return result
