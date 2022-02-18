@@ -18,6 +18,7 @@ import (
 type User struct {
 	Date     string `json:"date"`
 	Username string `json:"username"`
+	Name     string `json:"name"`
 	Avatar   string `json:"avatar"`
 	Commits  int    `json:"commits"`
 	Color    int    `json:"color"`
@@ -49,8 +50,22 @@ func getCommits(username string, date string) User {
 	// HTML страницы в формате string
 	pageStr := string(body[100000:225000])
 
-	// Индекс символа начала ссылки
-	left := strings.Index(pageStr, "https://avatars.githubusercontent.com/u")
+	// Поиск имени пользователя
+	left := strings.Index(pageStr, "itemprop=\"n") + 16
+
+	// Если имя найдено, считывает его и записывает
+	if left != -1 {
+		right := left
+		for ; pageStr[right] != '<'; right++ {
+			// Доводит pageStr[right] до символа '<'
+		}
+
+		// Запись имени
+		result.Name = pageStr[left+11 : right-9]
+	}
+
+	// Поиск ссылки на аватар
+	left = strings.Index(pageStr, "https://avatars.githubusercontent.com/u")
 
 	// Если ссылка найдена, считывает её и записывает
 	if left != -1 {
@@ -74,9 +89,8 @@ func getCommits(username string, date string) User {
 
 	// Проверка на существование нужной ячейки
 	if i != -1 {
-		for ; pageStr[i] != 's'; i-- {
-			// Доводит i до     v
-			//				class="ContributionCalendar-day"
+		for ; pageStr[i] != '<'; i-- {
+			// Доводит i до начала кода ячейки
 		}
 
 		// Получение параметров ячейки
@@ -85,8 +99,8 @@ func getCommits(username string, date string) User {
 		})
 
 		// Запись и обработка нужной информации
-		result.Color, _ = strconv.Atoi(values[11])
-		result.Commits, _ = strconv.Atoi(values[7])
+		result.Color, _ = strconv.Atoi(values[19])
+		result.Commits, _ = strconv.Atoi(values[15])
 
 	}
 
