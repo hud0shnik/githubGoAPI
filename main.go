@@ -74,18 +74,19 @@ func getCommits(username string, date string) User {
 
 	// Проверка на существование нужной ячейки
 	if i != -1 {
-		for ; pageStr[i] != '<'; i-- {
-			// Доводит i до начала кода ячейки
+		for ; pageStr[i] != 's'; i-- {
+			// Доводит i до     v
+			//				class="ContributionCalendar-day"
 		}
 
 		// Получение параметров ячейки
-		values := strings.FieldsFunc(pageStr[i:i+155], func(r rune) bool {
+		values := strings.FieldsFunc(pageStr[i:i+150], func(r rune) bool {
 			return r == '"'
 		})
 
 		// Запись и обработка нужной информации
-		result.Color, _ = strconv.Atoi(values[19])
-		result.Commits, _ = strconv.Atoi(values[15])
+		result.Color, _ = strconv.Atoi(values[11])
+		result.Commits, _ = strconv.Atoi(values[7])
 
 	}
 
