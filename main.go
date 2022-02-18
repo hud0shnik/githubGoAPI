@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -116,6 +115,6 @@ func main() {
 	router.HandleFunc("/{id}/{date}/", sendCommits).Methods("GET")
 
 	// Запуск API
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
-	//log.Fatal(http.ListenAndServe(":8080", router))
+	//log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
