@@ -40,27 +40,34 @@ func getCommits(username string, date string) User {
 		date = string(time.Now().Format("2006-01-02"))
 	}
 
+	// Результат
 	result := User{
 		Date:     date,
 		Username: username,
 	}
 
-	pageStr := string(body[:225000])
+	// HTML страницы в формате string
+	pageStr := string(body[100000:225000])
+
+	// Индекс символа начала ссылки
 	left := strings.Index(pageStr, "https://avatars.githubusercontent.com/u")
 
+	// Если ссылка найдена, считывает её и записывает
 	if left != -1 {
 		right := left
-		for ; pageStr[right] != '"'; right++ {
-
+		for ; pageStr[right] != '?'; right++ {
+			// Доводит pageStr[right] до символа '?'
 		}
+
+		// Запись ссылки
 		result.Avatar = pageStr[left:right]
 	}
 
-	// Так выглядит html одной ячейки:
+	// Так выглядит html одной ячейки календаря:
 	// <rect width="11" height="11" x="-36" y="75" class="ContributionCalendar-day" rx="2" ry="2" data-count="1" data-date="2021-12-03" data-level="1">
 
-	// Весь html страницы в формате string
-	pageStr = pageStr[140000:]
+	// Обрезает ненужную часть страницы
+	pageStr = pageStr[50000:]
 
 	// Указатель на ячейку нужной даты
 	i := strings.Index(pageStr, "data-date=\""+date)
@@ -112,5 +119,5 @@ func main() {
 
 	// Запуск API
 	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
-	// log.Fatal(http.ListenAndServe(":8080", router))
+	//log.Fatal(http.ListenAndServe(":8080", router))
 }
