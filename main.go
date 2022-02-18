@@ -18,9 +18,9 @@ import (
 type User struct {
 	Date     string `json:"date"`
 	Username string `json:"username"`
+	Avatar   string `json:"avatar"`
 	Commits  int    `json:"commits"`
 	Color    int    `json:"color"`
-	Avatar   string `json:"avatar"`
 }
 
 // Функция получения информации с сайта
@@ -84,11 +84,8 @@ func getCommits(username string, date string) User {
 		})
 
 		// Запись и обработка нужной информации
-		dataLevel, _ := strconv.Atoi(values[19])
-		commits, _ := strconv.Atoi(values[15])
-
-		// Запись обработанной информации
-		result.Commits, result.Color = commits, dataLevel
+		result.Color, _ = strconv.Atoi(values[19])
+		result.Commits, _ = strconv.Atoi(values[15])
 
 	}
 
