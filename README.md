@@ -14,11 +14,12 @@
   
    ``` Json
    {
-   "date":     "2022-01-21",
-   "username": "hud0shnik",
-   "avatar":   "https://avatars.githubusercontent.com/u/42404892"
-   "commits":  9,
-   "color":    4,
+  "date":     "2022-01-21",
+  "username": "hud0shnik",
+  "name":     "Danila Egorov",
+  "avatar":   "https://avatars.githubusercontent.com/u/42404892",
+  "commits":  9,
+  "color":    4
    }
    ```
    > ***color*** is color of the cell. There are 5 colors in total: from ***gray (0)*** to ***bright green (4)***
@@ -41,11 +42,12 @@ GET https://hud0shnikgitapi.herokuapp.com/hud0shnik/2022-01-21
 
 ``` Json
 {
-"date":     "2022-01-21",
-"username": "hud0shnik",
-"avatar":   "https://avatars.githubusercontent.com/u/42404892"
-"commits":  9,
-"color":    4,
+  "date":     "2022-01-21",
+  "username": "hud0shnik",
+  "name":     "Danila Egorov",
+  "avatar":   "https://avatars.githubusercontent.com/u/42404892",
+  "commits":  9,
+  "color":    4
 }
 ```
 > Параметр ***color*** - цвет ячейки. Всего есть 5 цветов: от ***серого (0)*** до ***ярко-зеленого (4)***
